@@ -153,10 +153,15 @@ CKEDITOR.plugins.add('plantuml',
 					elements: {
 						$: function (element) {
 							if (element.name == 'img') {
-								var imgsrc = element.attributes.src;
+								// var imgsrc = element.attributes.src;
 
-								element.attributes.src = imgsrc;
-								element.attributes['data-cke-saved-src'] = imgsrc;
+								// element.attributes.src = imgsrc;
+
+								var imgalt = element.attributes.alt;
+								var u = compress(imgalt);
+								u = "http://www.plantuml.com/plantuml/img/" + u;
+								element.attributes.src = u;
+								element.attributes['data-cke-saved-src'] = u;
 							}
 						}
 					}
