@@ -81,13 +81,13 @@ CKEDITOR.plugins.add('plantuml',
 											setup: function (element) {
 												var alt = element.getAttribute("alt");
 												if (alt != null) {
-													this.setValue(alt);
+													this.setValue(alt.substr(5));
 												}
 											},
 											commit: function (element) {
 												var u = compress(this.getValue());
 												u = "http://www.plantuml.com/plantuml/img/" + u;
-												element.setAttribute("alt", this.getValue());
+												element.setAttribute("alt", "(uml)" + this.getValue());
 												element.setAttribute("src", u);
 											}
 										},
@@ -152,12 +152,12 @@ CKEDITOR.plugins.add('plantuml',
 				htmlFilter.addRules({
 					elements: {
 						$: function (element) {
-							if (element.name == 'img') {
+							if (element.name == 'img' && element.attributes.alt.startsWith('(uml)')) {
 								// var imgsrc = element.attributes.src;
 
 								// element.attributes.src = imgsrc;
 
-								var imgalt = element.attributes.alt;
+								var imgalt = element.attributes.alt.substr(5);
 								var u = compress(imgalt);
 								u = "http://www.plantuml.com/plantuml/img/" + u;
 								element.attributes.src = u;
